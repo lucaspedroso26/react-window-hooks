@@ -13,24 +13,30 @@ import hooks from 'react-window-hooks'
 ### useClickOutside
 
 ```javascript
-import React from 'react'
-import { useClickOutside } from "react-window-hooks";
+import React, { useState } from 'react'
+import { useClickOutside } from '../hooks/useClickOutside'
 
-const App = () => {
-    const [showComponent, setShowComponent] = useState(false);
-    
-    const handleClickOutside = (isOutside: boolean) => {
-      if (isOutside) {
-        setShowCart(false);
-      }
-    };
+const ExampleUseClickOutside = () => {
+  const [showComponent, setShowComponent] = useState(true)
 
-    const { ref } = useClickOutside(handleClickOutside);
-    return (
+  const handleClickOutside = (isOutside: boolean) => {
+    if (isOutside) {
+      setShowComponent(false)
+    }
+  }
+
+  const { ref } = useClickOutside(handleClickOutside)
+  
+  return (
+    <div>
+      <p>Outside component</p>
+      {showComponent && (
         <div ref={ref}>
-            component to detect if it's outside
+          component to detect if it's outside
         </div>
-    )
+      )}
+    </div>
+  )
 }
 ```
 
@@ -96,12 +102,63 @@ const App = () => {
 import React from "react";
 import { useWindowSize } from "react-window-hooks";
 
-const App = () => {
-  const { width, height } = useWindowSize();
+export const ExampleUseWindowSize = () => {
+  const { width, height } = useWindowSize()
+  return (
+    <>
+      <div>height: {height}px</div>
+      <div>width: {width}px</div>
+    </>
+  )
+}
+```
 
-  // you can resize the screen an the values will be updated automaticaly with the resize movement 
-  console.log(width, height);
+### useLocalStorageState 
 
-  return <div>My Content Here</div>;
-};
+```javascript
+import { useLocalStorageState } from "react-window-hooks";
+type ProfileT = {
+  email: string
+  avatar: string
+}
+
+const ExampleUseLocalStorage = () => {
+  const [profile, setProfile] = useLocalStorageState<ProfileT>('profile', {
+    email: '',
+    avatar: '',
+  })
+
+  return (
+    <div>
+      <h1> {profile.email} </h1>
+      <img src={profile.avatar} />
+    </div>
+  )
+}
+
+```
+### useQueryState 
+
+```javascript
+import { useQueryState } from "react-window-hooks";
+
+type ProfileT = {
+  email: string
+  avatar: string
+}
+
+const ExampleUseQueryState = () => {
+  const [profile, setProfile] = useQueryState<ProfileT>('profile', {
+    email: '',
+    avatar: '',
+  })
+  
+  return (
+    <div>
+      <h1> {profile.email} </h1>
+      <img src={profile.avatar} />
+    </div>
+  )
+}
+
 ```
