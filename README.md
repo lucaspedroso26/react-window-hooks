@@ -14,7 +14,7 @@ import hooks from 'react-window-hooks'
 
 ```javascript
 import React, { useState } from 'react'
-import { useClickOutside } from '../hooks/useClickOutside'
+import { useClickOutside } from "react-window-hooks";
 
 const ExampleUseClickOutside = () => {
   const [showComponent, setShowComponent] = useState(true)
